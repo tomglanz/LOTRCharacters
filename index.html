@@ -1515,19 +1515,26 @@ const CAST_GROUPS = [
   {
     title: "People of Middle-earth",
     subtitle: "The marquee names.",
-    keys: ['frodo', 'sam', 'aragorn', 'gandalf', 'eowyn', 'galadriel', 'faramir', 'treebeard']
+    keys: ['frodo', 'sam', 'aragorn', 'gandalf', 'eowyn', 'galadriel', 'arwen', 'faramir', 'treebeard', 'bilbo', 'thorin']
   },
   {
     title: "Deep Cuts of the Shire and Beyond",
     subtitle: "Side characters, book-only heroes, and the unfairly forgotten.",
-    keys: ['bombadil', 'goldberry', 'glorfindel', 'fatty', 'maggot', 'lobelia', 'rosie', 'beregond', 'ioreth', 'quickbeam', 'ugluk']
+    keys: ['bombadil', 'goldberry', 'glorfindel', 'fatty', 'maggot', 'lobelia', 'rosie', 'beregond', 'ioreth', 'quickbeam', 'ugluk', 'beorn', 'smaug', 'belladonna', 'nimrodel', 'shelob']
   },
   {
     title: "Places & Things",
     subtitle: "Some results aren't even people.",
-    keys: ['ring', 'argonath', 'helmsdeep', 'shadowfax', 'eagles']
+    keys: ['ring', 'argonath', 'helmsdeep', 'shadowfax', 'eagles', 'sting', 'watcher', 'durinsbane']
   }
 ];
+
+const CAST_GROUP_KEY_SET = new Set(CAST_GROUPS.flatMap(group => group.keys));
+const MISSING_CAST_KEYS = Object.keys(CHARACTERS).filter(key => !CAST_GROUP_KEY_SET.has(key));
+const UNKNOWN_CAST_KEYS = [...CAST_GROUP_KEY_SET].filter(key => !CHARACTERS[key]);
+if (MISSING_CAST_KEYS.length || UNKNOWN_CAST_KEYS.length) {
+  console.warn('Full Cast group mismatch', { missing: MISSING_CAST_KEYS, unknown: UNKNOWN_CAST_KEYS });
+}
 
 function toggleFullCast() {
   const container = document.getElementById('full-cast');
